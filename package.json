@@ -1,0 +1,22 @@
+{
+    "name": "mongodb-promise",
+    "version": "0.0.0",
+    "description": "",
+    "main": "mongodb-promise.js",
+    "scripts": {
+        "test": "make test"
+    },
+    "author": "jbong",
+    "license": "MIT",
+    "dependencies": {
+        "mongodb": "~1.4.0",
+        "q": "~1.0.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jbong/mongodb-promise.git"
+    },
+    "devDependencies": {
+        "mocha": "1.12.0"
+    }
+}
