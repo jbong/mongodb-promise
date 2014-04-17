@@ -2,8 +2,9 @@
  * Created by jbong on 14/04/2014.
  */
 
-var mp = require('../mongodb-promise');
+var mp = require('../lib');
 var assert = require('assert');
+
 
 describe('MongoClient', function(){
 
