@@ -150,13 +150,11 @@ describe('Collection', function() {
             .then(function(db){
                 return db.createCollection('test')
                     .then(function(col) {
-                        return col.rename('test2')
-                            .then(function(result) {
-                                return db.collectionNames('test2');
-                            })
-                            .then(function(names) {
-                                assert.equal(1, names.length, 'renamed collection not found');
-                                return db.dropCollection('test2');
+                        return col.save({a : 1})
+                            .then(function(doc) {
+                                assert(doc != null);
+                                assert.ok(doc.a == 1);
+                                return db.dropCollection('test');
                             })
                             .then(function() {
                                 done();
@@ -166,5 +164,47 @@ describe('Collection', function() {
             .fail(function(err) {
                 done(err);
             })
+    });
+
+    it('should update a document', function(done) {
+        mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
+            .then(function(db){
+                return db.createCollection('test')
+                    .then(function(col) {
+                        return col.save({a : 1})
+                            .then(function() {
+                                return col.update({a : 1}, {$set:{b:2}});
+                            })
+                            .then(function(result) {
+                                assert.equal(result, 1);
+                                return db.dropCollection('test');
+                            })
+                            .then(done())
+                    })
+            })
+            .fail(function(err) {
+                done(err);
+            }).done()
+    });
+
+    it('should fetch distinct values for a key', function(done) {
+        mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
+            .then(function(db){
+                return db.createCollection('test')
+                    .then(function(col) {
+                        return col.insert([{a : 1}, {a : 1}, {a : 2}])
+                            .then(function() {
+                                return col.distinct('a');
+                            })
+                            .then(function(result) {
+                                assert.deepEqual([1, 2], result.sort());
+                                return db.dropCollection('test');
+                            })
+                            .then(done())
+                    })
+            })
+            .fail(function(err) {
+                done(err);
+            }).done()
     });
 });

@@ -1,23 +1,36 @@
 {
-  "name": "mongodb-promise",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "make test"
-  },
-  "author": "jbong",
-  "license": "MIT",
-  "dependencies": {
-    "mongodb": "~1.4.0",
-    "q": "~1.0.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jbong/mongodb-promise.git"
-  },
-  "devDependencies": {
-    "mocha": "1.12.0",
-    "jsdoc": "~3.3.0-alpha5"
-  }
+    "name": "mongodb-promise",
+    "version": "0.0.1",
+    "description": "A mongodb-native promise library",
+    "main": "index.js",
+    "scripts": {
+        "test": "make test"
+    },
+    "author": "Jeremy Bowles <jbong.net@gmail.com> (https://github.com/jbong/mongodb-promise)",
+    "dependencies": {
+        "mongodb": "~1.4.0",
+        "q": "~1.0.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jbong/mongodb-promise.git"
+    },
+    "license": {
+        "type": "MIT",
+        "url": "http://github.com/jbong/mongodb-promise/raw/master/LICENSE"
+    },
+    "devDependencies": {
+        "mocha": "1.12.0",
+        "jsdoc": "~3.3.0-alpha5"
+    },
+    "keywords": [
+        "mongo",
+        "mongodb",
+        "promise",
+        "promises",
+        "promises-a",
+        "promises-aplus",
+        "node"
+    ]
+
 }
