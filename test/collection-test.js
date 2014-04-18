@@ -193,17 +193,21 @@ describe('Collection', function() {
                 return db.createCollection('test')
                     .then(function(col) {
                         return col.insert([{a : 1}, {a : 1}, {a : 2}])
-                            .then(function() {
+                            .then(function(result) {
+                                assert.equal(result.length, 3);
                                 return col.distinct('a');
                             })
                             .then(function(result) {
                                 assert.deepEqual([1, 2], result.sort());
                                 return db.dropCollection('test');
                             })
-                            .then(done())
+                            .then(function() {
+                                done();
+                            })
                     })
             })
             .fail(function(err) {
+                console.log(err);
                 done(err);
             }).done()
     });
