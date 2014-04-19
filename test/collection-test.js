@@ -207,7 +207,99 @@ describe('Collection', function() {
                     })
             })
             .fail(function(err) {
-                console.log(err);
+                done(err);
+            }).done()
+    });
+
+    it('should count', function(done) {
+        mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
+            .then(function(db){
+                return db.createCollection('test')
+                    .then(function(col) {
+                        return col.insert([{a : 1}, {a : 1}, {a : 2}])
+                            .then(function(result) {
+                                assert.equal(result.length, 3);
+                                return col.count();
+                            })
+                            .then(function(result) {
+                                assert.equal(result, 3);
+                                return db.dropCollection('test');
+                            })
+                            .then(function() {
+                                done();
+                            })
+                    })
+            })
+            .fail(function(err) {
+                done(err);
+            }).done()
+    });
+
+
+    it('should drop itself', function(done) {
+        mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
+            .then(function(db){
+                return db.createCollection('test')
+                    .then(function(col) {
+                        return col.drop()
+                            .then(function(result) {
+                                return db.collectionNames('test')
+                            })
+                            .then(function(names) {
+                                assert.equal(0, names.length);
+                                done();
+                            })
+                    })
+            })
+            .fail(function(err) {
+                done(err);
+            }).done()
+    });
+
+    it('should find and modify a document', function(done) {
+        mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
+            .then(function(db){
+                return db.createCollection('test')
+                    .then(function(col) {
+                        return col.insert([{a : 1}, {a : 1}, {a : 2}])
+                            .then(function(result) {
+                                return col.findAndModify({a : 2}, [['a', 1]], {$set : {b :2}}, {new:true})
+                            })
+                            .then(function(doc) {
+                                assert.ok(doc != null);
+                                assert.equal(doc.b, 2);
+                                return db.dropCollection('test');
+                            })
+                            .then(function() {
+                                done();
+                            })
+                    })
+            })
+            .fail(function(err) {
+                done(err);
+            }).done()
+    });
+
+    it('should find one document', function(done) {
+        mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
+            .then(function(db){
+                return db.createCollection('test')
+                    .then(function(col) {
+                        return col.insert([{a : 1}, {a : 1}, {a : 2}])
+                            .then(function() {
+                                return col.findOne({a : 2})
+                            })
+                            .then(function(doc) {
+                                assert.ok(doc != null);
+                                assert.equal(doc.a, 2);
+                                return db.dropCollection('test');
+                            })
+                            .then(function() {
+                                done();
+                            })
+                    })
+            })
+            .fail(function(err) {
                 done(err);
             }).done()
     });
