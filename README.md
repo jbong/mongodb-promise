@@ -62,6 +62,8 @@ mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
 ```
 ## Download
 
+    npm install mongodb-promise
+
 ## Test
 
     make test
