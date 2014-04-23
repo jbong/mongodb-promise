@@ -29,7 +29,7 @@ mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
 .fail(function(err) {console.log(err)});
 
 // Insert documents
-mp.MongoClient.connect("mongodb://127.0.0.1:27017")
+mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
     .then(function(db){
         return db.collection('test')
             .then(function(col) {
