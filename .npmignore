@@ -1,0 +1,5 @@
+test
+.npmignore
+.gitignore
+.travis.yml
+Makefile
