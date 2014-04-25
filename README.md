@@ -42,7 +42,7 @@ mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
 })
 .fail(function(err) {console.log(err);});
 
-// Read documents
+// Read all documents
 mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
     .then(function(db){
         return db.collection('test')
@@ -58,6 +58,21 @@ mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
         })
 })
 .fail(function(err) {console.log(err)});
+
+// Read each document
+mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
+    .then(function(db){
+        return db.collection('test')
+            .then(function(col) {
+                return col.find({a : 1}).each(function(doc) {
+                    console.log(doc);
+                })
+                .then(function() {
+                    db.close().then(console.log('success'));
+                })
+        })
+})
+.fail(function(err) {console.log(err);});
 
 ```
 ## Download

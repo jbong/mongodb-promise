@@ -337,10 +337,7 @@ describe('Collection', function() {
                     .then(function(col) {
                         return col.insert([{a : 1}, {a : 1}, {a : 2}])
                             .then(function(result) {
-                                return col.find({a : 1})
-                            })
-                            .then(function(cursor){
-                                return cursor.toArray();
+                                return col.find({a : 1}).toArray();
                             })
                             .then(function(items) {
                                 assert.ok(items.length == 2);
@@ -357,7 +354,6 @@ describe('Collection', function() {
     });
 
     it('should find documents and return cursor', function(done) {
-        var found = [];
 
         mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
             .then(function(db){
@@ -365,20 +361,14 @@ describe('Collection', function() {
                     .then(function(col) {
                         return col.insert([{a : 1}, {a : 1}, {a : 2}])
                             .then(function() {
-                                return col.find({a : 1})
-                            })
-                            .then(function(cursor){
-                                return cursor.each(function(doc) {
-                                   found.push(doc);
-                                });
-                            })
-                            .then(function() {
-                                assert.ok(found.length == 2);
+                                var c = col.find({a : 1});
+                                assert.ok(c instanceof mp.Cursor);
                                 return db.dropCollection('test');
                             })
                             .then(function() {
                                 done();
                             })
+
                     })
             })
             .fail(function(err) {
