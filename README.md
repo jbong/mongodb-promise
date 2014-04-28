@@ -45,17 +45,14 @@ mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
 // Read all documents
 mp.MongoClient.connect("mongodb://127.0.0.1:27017/test")
     .then(function(db){
-        return db.collection('test')
-            .then(function(col) {
-                return col.find({a : 1})
-                    .then(function(cursor){
-                        return cursor.toArray();
-                    })
-                    .then(function(items) {
-                        console.log(items);
-                        db.close().then(console.log('success'));
-                    })
-        })
+            return db.collection('test')
+                .then(function(col) {
+                    return col.find({a : 1}).toArray()
+                        .then(function(items) {
+                            console.log(items);
+                            db.close().then(console.log('success'));
+                        })
+            })
 })
 .fail(function(err) {console.log(err)});
 
