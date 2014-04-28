@@ -9,9 +9,9 @@ Mongodb-promise is a light promise wrapper around [node-mongodb-native](https://
 ## Quick Examples
 
 ```js
-// Obtaining a connection
 var mp = require('mongodb-promise');
 
+// Obtaining a connection
 mp.MongoClient.connect("mongodb://127.0.0.1:27017/test").then(function(db){
     db.close().then(console.log('success'));
 }, function(err) {
