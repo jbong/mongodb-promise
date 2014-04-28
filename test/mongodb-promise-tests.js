@@ -33,14 +33,8 @@ describe('mongodb-promise', function(){
     afterEach(function(done) {
         mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
             .then(function(db){
-                return db.dropDatabase()
-                    .then(function() {
-                        return db.close().then(done());
-                    })
+                return db.dropCollection('test').then(function() {done()}, function(err) {done()});
             })
-            .fail(function(err) {
-                done(err);
-            }).done()
     });
 
     describe('MongoClient', function(){
@@ -54,6 +48,7 @@ describe('mongodb-promise', function(){
     });
 
     describe('Db', function(){
+
         it('should open', function(done) {
             var db = new mp.Db('mptestdb', new mp.Server('localhost', 27017), {w:1});
             db.open().then(function(db) {
@@ -249,7 +244,6 @@ describe('mongodb-promise', function(){
 
 
     describe('Collection', function() {
-
         it('should get stats', function(done) {
             mp.MongoClient.connect("mongodb://localhost:27017/mptestdb")
                 .then(function(db){
